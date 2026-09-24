@@ -1270,6 +1270,9 @@ void CChainState::InitCoinsCache()
 //
 bool CChainState::IsInitialBlockDownload() const
 {
+    /* ХАК: Полностью отключаем режим IBD */
+    return false;
+
     // Optimization: pre-test latch before taking the lock.
     if (m_cached_finished_ibd.load(std::memory_order_relaxed))
         return false;
@@ -1289,6 +1292,7 @@ bool CChainState::IsInitialBlockDownload() const
     m_cached_finished_ibd.store(true, std::memory_order_relaxed);
     return false;
 }
+
 
 static CBlockIndex *pindexBestForkTip = nullptr, *pindexBestForkBase = nullptr;
 
